@@ -22,10 +22,10 @@ def get_requirements(file_path:str = REQUIREMENTS_FILE_NAME)-> List[str]:
 
 
 setup(
-name=NAME,
-version=VERSION,
-author=AUTHOR,
-author_email=AUTHOR_EMAIL_ID,
-packages=find_packages(),
-install_requires = get_requirements() #['pandas','numpy','scikit-learn','pymongo']
-)
+    name=NAME,
+    version=VERSION,
+    author=AUTHOR,
+    author_email=AUTHOR_EMAIL_ID,
+    packages=find_packages(),
+    install_requires = get_requirements() #['pandas','numpy','scikit-learn','pymongo']
+    )
