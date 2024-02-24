@@ -4,6 +4,8 @@ import logging
 import json
 from .exception import SensorException
 import sys
+import yaml
+import os
 
 def dump_csv_file_to_mongodb_collection(file_path:str, database_name:str, collection_name:str)->None:
     try:
@@ -31,3 +33,22 @@ def export_collection_as_dataframe(database_name:str, collection_name:str)->pd.D
         return df
     except Exception as e:
         raise SensorException(e,sys)
+
+
+def read_yaml_file(file_path):
+    try:
+        with open(file_path,'rb') as file_reader:
+            return yaml.safe_load(file_reader)
+    except Exception as e:
+        raise SensorException(e,sys)
+    
+
+def write_yaml_file(file_path, data:dict):
+    try:
+        file_dir = os.path.dirname(file_path)
+        os.makedirs(file_dir, exist_ok= True)
+        with open(file_path,'w') as file_writer:
+            yaml.dump(data, file_writer)
+    except Exception as e:
+        raise SensorException(e,sys)
+    
