@@ -72,3 +72,9 @@ class ModelTrainerConfig:
                self.overfitting_threshold = 0.1
           except Exception as e:
                raise SensorException(e,sys)
+          
+class ModelEvaluationConfig:
+     def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+          self.change_thresold = 0.01
+          self.schema_file_path = os.path.join('schema.yaml')
+

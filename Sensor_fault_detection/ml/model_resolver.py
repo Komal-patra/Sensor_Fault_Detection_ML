@@ -1,4 +1,4 @@
-from Sensor_fault_detection import SensorException
+from Sensor_fault_detection.exception import SensorException
 import os,sys
 from typing import Optional
 from Sensor_fault_detection.entity.config_entity import (TRANSFORMER_OBJECT_FILE_NAME,
