@@ -3,13 +3,15 @@ from Sensor_fault_detection.entity.config_entity import (TrainingPipelineConfig,
                                                          DataValidationConfig, 
                                                          DataTransformationConfig,
                                                          ModelTrainerConfig,
-                                                         ModelEvaluationConfig)
+                                                         ModelEvaluationConfig,
+                                                         ModelPusherConfig)
 
 from Sensor_fault_detection.entity.artifact_entity import (DataIngestionArtifact, 
                                                            DataValidationArtifact, 
                                                            DataTransformationArtifact,
                                                            ModelTrainerArtifact,
-                                                           ModelEvaluationArtifact)
+                                                           ModelEvaluationArtifact,
+                                                           ModelPusherArtifact)
 
 from Sensor_fault_detection.exception import SensorException
 
@@ -22,7 +24,7 @@ from Sensor_fault_detection.components.data_validation import DataValidation
 from Sensor_fault_detection.components.data_transformation import DataTransformation
 from Sensor_fault_detection.components.model_trainer import ModelTrainer
 from Sensor_fault_detection.components.model_evaluation import ModelEvaluation
-
+from Sensor_fault_detection.components.model_pusher import ModelPusher
 
 class TrainingPipeline:
 
@@ -101,6 +103,17 @@ class TrainingPipeline:
             return model_eval.initiate_model_evaluation()
         except Exception as e:
             raise SensorException(e, sys)
+        
+    def start_model_pusher(self,  data_transformation_artifact:DataTransformationArtifact,
+        model_trainer_artifact:ModelTrainerArtifact)->ModelPusherArtifact:
+        try:
+            model_pusher_config = ModelPusherConfig(training_pipeline_config=self.training_pipeline_config)
+            model_pusher = ModelPusher(model_pusher_config=model_pusher_config,
+             data_transformation_artifact=data_transformation_artifact, 
+             model_trainer_artifact=model_trainer_artifact)
+            return model_pusher.initiate_model_pusher()
+        except Exception as e:
+            raise SensorException(e, sys)
 
         
     def start(self,):
@@ -118,6 +131,9 @@ class TrainingPipeline:
             )
             model_eval_artifact = self.start_model_evaluation(data_validation_artifact=data_validation_artifact,
                             data_transformation_artifact=data_tranformation_artifact,
+                            model_trainer_artifact=model_trainer_artifact)
+            
+            model_pusher_artifact = self.start_model_pusher(data_transformation_artifact=data_tranformation_artifact,
                             model_trainer_artifact=model_trainer_artifact)
             
         except Exception as e:
