@@ -9,4 +9,5 @@ dnspython==2.2.1
 xgboost==1.6.2
 PyYAML
 apache-airflow
+virtualenv
 -e .
