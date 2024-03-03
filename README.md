@@ -80,3 +80,9 @@ pip install -r requirements.txt
 ```
 
 
+
+### Airflow 
+
+![image](https://github.com/Komal-patra/Sensor_Fault_Detection_ML/blob/1f9fb475c5a7719fb26ad5610ac73255022c0532/images/Airflow_batch_prediction.png)
+
+![image](https://github.com/Komal-patra/Sensor_Fault_Detection_ML/blob/1f9fb475c5a7719fb26ad5610ac73255022c0532/images/Airflow_training_pipeline.png)
